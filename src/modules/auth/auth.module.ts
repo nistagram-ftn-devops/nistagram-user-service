@@ -1,15 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user.entity';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
-import { UserService } from './user.service';
+import { UserModule } from '../user/user.module';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([User]),
         JwtModule.registerAsync({
             useFactory: () => ({
                 secret: 'supersecretkey',
@@ -17,9 +14,10 @@ import { UserService } from './user.service';
                     expiresIn: '1000m'
                 }
             })
-        })
+        }),
+        UserModule
     ],
-    providers: [JwtStrategy, AuthService, UserService],
+    providers: [JwtStrategy, AuthService],
     controllers: [AuthController]
 })
 export class AuthModule {}

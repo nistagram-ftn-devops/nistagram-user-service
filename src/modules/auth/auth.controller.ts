@@ -1,12 +1,10 @@
-import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Body, Controller, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './auth.types';
-import { UserService } from './user.service';
+import { UserService } from '../user/user.service';
 
 @Controller('user/auth')
 export class AuthController {
-
     constructor(private authService: AuthService, private userService: UserService) {}
 
     @Post('login')
@@ -16,11 +14,5 @@ export class AuthController {
             userId: user.id,
             token: this.authService.getTokenForUser(user)
         }
-    }
-
-    @Get('profile')
-    @UseGuards(AuthGuard('jwt'))
-    async getProfile(@Request() request) {
-        return request.user
     }
 }
