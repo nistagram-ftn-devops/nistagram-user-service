@@ -13,7 +13,7 @@ export class User extends BaseEntity {
     @Exclude()
     password: string
 
-    @Column()
+    @Column({ default: true })
     isPublic: boolean
 
     @Column()
