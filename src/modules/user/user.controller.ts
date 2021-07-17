@@ -1,5 +1,6 @@
-import { Controller, Get, UseGuards, Request, Param, Post, Body } from "@nestjs/common";
+import { Controller, Get, UseGuards, Request, Param, Post, Body, Patch, Put } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
+import { User } from "./user.entity";
 import { UserService } from "./user.service";
 import { UserRegistrationDto } from "./user.types";
 
@@ -21,5 +22,10 @@ export class UserController {
     @Post('register')
     async register(@Body() payload: UserRegistrationDto) {
         return this.userService.create(payload)
+    }
+
+    @Put('update')
+    async updateProfile(@Body() payload: Partial<User>) {
+        return this.userService.update(payload)
     }
 }

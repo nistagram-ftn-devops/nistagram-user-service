@@ -42,4 +42,17 @@ export class UserService {
 
         return this.userRepository.save(user)
     }
+
+    async update(payload: Partial<User>) {
+        const user = await this.findByUsername(payload.username)        
+        user.password = payload.password
+        user.name = payload.name
+        user.email = payload.email
+        user.phoneNum = payload.phoneNum
+        user.dateOfBirth = payload.dateOfBirth
+        user.website = payload.website
+        user.biography = payload.biography
+
+        return this.userRepository.save(user)
+    }
 }
