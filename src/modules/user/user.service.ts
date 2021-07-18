@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { LoginDto } from "../auth/auth.types";
 import { User } from "./user.entity";
 import { UserRepository } from "./user.repository";
+import { UserRegistrationDto, UserRole } from "./user.types";
 
 @Injectable()
 export class UserService {
@@ -26,7 +27,7 @@ export class UserService {
         return found
     }
 
-    async create(payload: Partial<User>) {
+    async create(payload: UserRegistrationDto) {
         const found = await this.userRepository.findOne({ username: payload.username })
         if (found) throw new BadRequestException('user-exists')
         
@@ -39,6 +40,14 @@ export class UserService {
         user.dateOfBirth = payload.dateOfBirth
         user.website = payload.website
         user.biography = payload.biography
+
+        if (payload.isAgent) {
+            user.isActive = false
+            user.role = UserRole.agent
+        } else {
+            user.isActive = true
+            user.role = UserRole.user
+        }
 
         return this.userRepository.save(user)
     }
