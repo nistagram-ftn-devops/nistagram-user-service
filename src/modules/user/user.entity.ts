@@ -40,4 +40,7 @@ export class User extends BaseEntity {
 
     @Column({ default: UserRole.user })
     role: UserRole
+
+    @Column({ default: false })
+    adminReviewd: boolean
 }

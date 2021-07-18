@@ -28,4 +28,19 @@ export class UserController {
     async updateProfile(@Body() payload: Partial<User>) {
         return this.userService.update(payload)
     }
+
+    @Get(':id/accept')
+    async acceptAgent(@Param('id') id: string) {
+        return this.userService.acceptAgent(+id)
+    }
+
+    @Get(':id/decline')
+    async declineAgent(@Param('id') id: string) {
+        return this.userService.declineAgent(+id)
+    }
+
+    @Get('agents')
+    async getAgents() {
+        return this.userService.getAgents()
+    }
 }
