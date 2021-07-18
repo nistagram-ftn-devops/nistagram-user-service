@@ -64,4 +64,26 @@ export class UserService {
 
         return this.userRepository.save(user)
     }
+
+    async acceptAgent(agentId: number) {
+        const agent = await this.findById(agentId)
+        if (agent.role !== UserRole.agent) throw new BadRequestException('user-not-agent')
+        if (agent.adminReviewd) throw new BadRequestException('already-reviewed')
+        agent.adminReviewd = true
+        agent.isActive = true
+        return this.userRepository.save(agent)
+    }
+
+    async declineAgent(agentId: number) {
+        const agent = await this.findById(agentId)
+        if (agent.adminReviewd) throw new BadRequestException('already-reviewed')
+        if (agent.adminReviewd) throw new BadRequestException('already-reviewed')
+        agent.adminReviewd = true
+        agent.isActive = false
+        return this.userRepository.save(agent)
+    }
+
+    async getAgents() {
+        return this.userRepository.find({ role: UserRole.agent })
+    }
 }
