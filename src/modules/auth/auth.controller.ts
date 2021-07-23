@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './auth.types';
 import { UserService } from '../user/user.service';
 
-@Controller('user/auth')
+@Controller('api/user/auth')
 export class AuthController {
     constructor(private authService: AuthService, private userService: UserService) {}
 
@@ -11,7 +11,7 @@ export class AuthController {
     async login(@Body() payload: LoginDto) {
         const user = await this.userService.validateLogin(payload)
         return {
-            userId: user.id,
+            user: user,
             token: this.authService.getTokenForUser(user)
         }
     }
