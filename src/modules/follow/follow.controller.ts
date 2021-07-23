@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { Follow } from './follow.entity';
 import { FollowService } from './follow.service';
 
-@Controller('user/follow')
+@Controller('api/user/follow')
 export class FollowController {
     constructor(private followService: FollowService) {}
 

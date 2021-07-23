@@ -4,7 +4,7 @@ import { User } from "./user.entity";
 import { UserService } from "./user.service";
 import { UserRegistrationDto } from "./user.types";
 
-@Controller('user/user')
+@Controller('api/user/user')
 export class UserController {
     constructor(private userService: UserService) {}
 
