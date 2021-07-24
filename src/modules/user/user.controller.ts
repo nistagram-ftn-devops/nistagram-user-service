@@ -19,7 +19,7 @@ export class UserController {
         return this.userService.findByUsername(username)
     }
 
-    @Get('profile/:id')
+    @Get('profile/id/:id')
     async getProfileById(@Param('id') id: string) {
         return this.userService.findById(+id)
     }
