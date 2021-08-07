@@ -29,6 +29,11 @@ export class UserController {
         return this.userService.create(payload)
     }
 
+    @Post('register-agent')
+    async registerAgent(@Body() payload: UserRegistrationDto) {
+        return this.userService.createAgent(payload)
+    }
+
     @Put('update')
     async updateProfile(@Body() payload: Partial<User>) {
         return this.userService.update(payload)

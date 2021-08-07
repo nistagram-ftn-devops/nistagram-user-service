@@ -52,6 +52,26 @@ export class UserService {
         return this.userRepository.save(user)
     }
 
+    async createAgent(payload: UserRegistrationDto) {
+        const found = await this.userRepository.findOne({ username: payload.username })
+        if (found) throw new BadRequestException('user-exists')
+        
+        const user = new User()
+        user.username = payload.username
+        user.password = payload.password
+        user.name = payload.name
+        user.email = payload.email
+        user.phoneNum = payload.phoneNum
+        user.dateOfBirth = payload.dateOfBirth
+        user.website = payload.website
+        user.biography = payload.biography
+        user.isActive = true
+        user.role = UserRole.agent
+        user.adminReviewd = true
+
+        return this.userRepository.save(user)
+    }
+
     async update(payload: Partial<User>) {
         const user = await this.findByUsername(payload.username)        
         user.password = payload.password
