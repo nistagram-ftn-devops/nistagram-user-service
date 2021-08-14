@@ -19,9 +19,19 @@ export class UserController {
         return this.userService.findByUsername(username)
     }
 
+    @Get('profile/id/:id')
+    async getProfileById(@Param('id') id: string) {
+        return this.userService.findById(+id)
+    }
+
     @Post('register')
     async register(@Body() payload: UserRegistrationDto) {
         return this.userService.create(payload)
+    }
+
+    @Post('register-agent')
+    async registerAgent(@Body() payload: UserRegistrationDto) {
+        return this.userService.createAgent(payload)
     }
 
     @Put('update')
