@@ -31,4 +31,9 @@ export class FollowController {
     async doIFollow(@Body() payload: { me: number, user: number }) {
         return this.followService.doIFollow(payload)
     }
+
+    @Get('following/:userId')
+    async getMyFollowing(@Param('userId') userId: string) {
+        return this.followService.getUserFollowing(+userId)
+    }
 }
