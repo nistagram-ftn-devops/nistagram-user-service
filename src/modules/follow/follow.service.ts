@@ -65,4 +65,12 @@ export class FollowService {
     async getFollowRequests(userId: number) {
         return this.followRepository.find({ followeeId: userId, activeRequest: true })
     }
+
+    async doIFollow(payload: { me: number, user: number }) {
+        return this.followRepository.find({ followerId: payload.me, followeeId: payload.user, accepted: true })
+    }
+
+    async getUserFollowing(usedId: number) {
+        return this.followRepository.find({ followerId: usedId, accepted: true })
+    }
 }

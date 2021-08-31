@@ -8,26 +8,32 @@ export class FollowController {
     constructor(private followService: FollowService) {}
 
     @Post()
-    @UseGuards(AuthGuard('jwt'))
     async follow(@Body() payload: Partial<Follow>) {
         return this.followService.follow(payload)
     }
 
     @Post(':id/accept')
-    @UseGuards(AuthGuard('jwt'))
     async acceptFollow(@Param('id') id: string) {
         return this.followService.acceptRequest(+id)
     }
 
     @Post(':id/decline')
-    @UseGuards(AuthGuard('jwt'))
     async declineFollow(@Param('id') id: string) {
         return this.followService.declineRequest(+id)
     }
 
-    @Get('requests')
-    @UseGuards(AuthGuard('jwt'))
-    async getFollowRequests(@Request() request) {
-        return this.followService.getFollowRequests(request.user.id)
+    @Get('requests/:id')
+    async getFollowRequests(@Param('id') id: string) {
+        return this.followService.getFollowRequests(+id)
+    }
+
+    @Post('do-i-follow')
+    async doIFollow(@Body() payload: { me: number, user: number }) {
+        return this.followService.doIFollow(payload)
+    }
+
+    @Get('following/:userId')
+    async getMyFollowing(@Param('userId') userId: string) {
+        return this.followService.getUserFollowing(+userId)
     }
 }
